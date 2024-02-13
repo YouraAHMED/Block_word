@@ -1,0 +1,18 @@
+
+J
+java:S1066z"/Merge this if statement with the enclosing one.(Ğ†æïşÿÿÿÿ
+f	java:S117#"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷òÑŒ
+k	java:S117J"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·‰éÖÿÿÿÿÿ
+k	java:S117p"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıØÔÍıÿÿÿÿ
+P
+java:S6213'":Rename this variable to not match a restricted identifier.(Úä½€
+h
+java:S3776I"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ˆÑôç
+m
+java:S3776p"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(ıØÔÍıÿÿÿÿ
+J
+java:S2864w"4Iterate over the "entrySet" instead of the "keySet".(ÇÕÓ
+I
+java:S2864x"4Iterate over the "entrySet" instead of the "keySet".(İ”Ò/
+P
+java:S2864‚"4Iterate over the "entrySet" instead of the "keySet".(«¦áúÿÿÿÿ

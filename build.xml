@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!-- Déclaration de la version XML -->
+<project name="BlockWorld" default="compile" basedir=".">
+
+    <!-- App properties -->
+    <property name="app.name" value="VariableContrainte_Plannification"/>
+    <property name="app.version" value="1.0"/>
+
+    <!-- Paths -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="doc.dir" value="doc"/>
+
+
+    <!-- Java properties -->
+    <property name="java.compilerargs" value="-Xlint:unchecked"/>
+
+    <!-- Javadoc properties -->
+    <property name="javadoc.version" value="1.8"/>
+    <property name="javadoc.source" value="1.8"/>
+    <property name="javadoc.target" value="1.8"/>
+    <property name="javadoc.encoding" value="UTF-8"/>
+    <property name="javadoc.author" value="true"/>
+    <property name="javadoc.version" value="true"/>
+    <property name="javadoc.use" value="true"/>
+    <property name="javadoc.windowtitle" value="${app.name} ${app.version} API"/>
+    <property name="javadoc.doctitle" value="${app.name} ${app.version} API"/>
+    <property name="javadoc.header" value="&lt;h1&gt;${app.name} ${app.version} API&lt;/h1&gt;"/>
+    <property name="javadoc.footer" value="&lt;h2&gt;${app.name} ${app.version} API&lt;/h2&gt;"/>
+    <property name="javadoc.bottom" value="&lt;h3&gt;${app.name} ${app.version} API&lt;/h3&gt;"/>
+
+    <!-- JAR properties -->
+    <property name="jar.manifest" value="manifest.mf"/>
+    <property name="jar.file" value="${app.name}-${app.version}.jar"/>
+    <property name="jar.dir" value="jar"/>
+
+
+    <!-- Path -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Init target -->
+    <target name="init" description="Create principal directories">
+
+        <mkdir dir="${build.dir}"/>
+
+        <mkdir dir="${dist.dir}"/>
+
+        <mkdir dir="${doc.dir}"/>
+
+        <mkdir dir="${jar.dir}"/>
+
+        <echo message="Initialisation"/>
+
+        <echo>
+
+            Initialisation des traitements du projet ${ant.project.name}
+
+        </echo>
+
+    </target>
+
+    <!-- Clean target -->
+
+    <target name="clean" description="Clean unnecessary files">
+
+        <delete dir="${build.dir}"/>
+
+        <delete dir="${dist.dir}"/>
+
+        <delete dir="${doc.dir}"/>
+
+        <delete dir="${jar.dir}"/>
+
+    </target>
+
+
+    <!-- Compile target -->
+    <target name="compile" depends="init" description="Compile all sources">
+        <javac srcdir="${src.dir}" destdir="${build.dir}"
+               debuglevel="lines,vars,source" includeantruntime="false"
+               encoding="UTF-8">
+            <classpath refid="classpath"/>
+            <compilerarg line="${java.compilerargs}"/>
+        </javac>
+
+        <copy todir="${build.dir}">
+            <fileset dir="${src.dir}">
+                <include name="**/*.properties"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Javadoc target -->
+    <!-- Javadoc target -->
+
+    <target name="javadoc" depends="compile" description="Generate javadoc">
+
+        <javadoc sourcepath="${src.dir}" destdir="${doc.dir}" author="${javadoc.author}"
+
+                 version="${javadoc.version}" use="${javadoc.use}" windowtitle="${javadoc.windowtitle}"
+
+                 doctitle="${javadoc.doctitle}" header="${javadoc.header}" footer="${javadoc.footer}"
+
+                 bottom="${javadoc.bottom}" source="${javadoc.source}"
+
+                 encoding="${javadoc.encoding}">
+
+            <classpath refid="classpath"/>
+
+        </javadoc>
+
+    </target>
+
+
+    <!-- Jar target -->
+    <target name="jar" depends="compile" description="Generate jar file">
+        <jar destfile="${jar.dir}/${jar.file}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Manifest-Version" value="1.0"/>
+                <attribute name="Main-Class" value="core.Main"/>
+                <attribute name="Class-Path" value="."/>
+            </manifest>
+        </jar>
+    </target>
+
+
+    <!-- Dist target -->
+
+    <target name="dist" depends="jar" description="Generate distribution">
+
+        <copy todir="${dist.dir}">
+
+            <fileset dir="${jar.dir}">
+
+                <include name="**/*.jar"/>
+
+            </fileset>
+
+        </copy>
+
+    </target>
+
+
+    <!-- Run target-->
+    <target name="run" depends="jar" description="Run main">
+        <java classname="core.Main" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runTestModelling" depends="jar" description="Run testModelling">
+        <java classname="test.TestModelling" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runTestPlanning" depends="jar" description="Run testPlannig">
+        <java classname="test.TestPlanning" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runTestCp" depends="jar" description="Run testCp">
+        <java classname="test.TestCp" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runTestDatamining" depends="jar" description="Run testDatamining">
+        <java classname="test.TestDatamining" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runMainPlanning" depends="jar" description="Run MainPlanning">
+        <java classname="blocksworld.core.MainPlanning" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runMainBooleanDatabase" depends="jar" description="Run runMainBooleanDatabase">
+        <java classname="blocksworld.core.MainBooleanDatabase" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+
+    <target name="runMainCP" depends="jar" description="Run runMainCP">
+        <java classname="blocksworld.core.MainCP" fork="true">
+            <classpath refid="classpath"/>
+            <classpath path="${build.dir}"/>
+        </java>
+    </target>
+
+    <target name="runAllTest" depends="runTestModelling, runTestPlanning, runTestCp , runTestDatamining" description="Run allTest"/>
+
+
+    <!-- Help target -->
+    <target name="help" description="Display help">
+        <echo>Available targets:</echo>
+        <echo>init: Permet de créer les dossiers de base</echo>
+        <echo>clean : Permet de supprimer les fichiers inutiles</echo>
+        <echo>compile: Permet de compiler le main</echo>
+        <echo>javadoc: Permet de générer la javadoc qui permet de comprendre le code</echo>
+        <echo>jar: Permet de générer le jar</echo>
+        <echo>dist: Permet de générer la distribution du projet</echo>
+        <echo>run: Permet de lancer le main</echo>
+        <echo>runTestCp: permet de lancer les tests pour le package cp</echo>
+        <echo>runTestDatamining: permet de lancer les tests pour le package datamining</echo>
+        <echo>runTestModelling: Permet de lancer le test pour le modelling</echo>
+        <echo>runTestPlanning: Permet de lancer le test pour le planning</echo>
+        <echo>runAllTest: Permet de lancer le test pour le planning et pour modelling</echo>
+        <echo>help: Permet d'afficher l'aide</echo>
+
+    </target>
+
+
+</project>
